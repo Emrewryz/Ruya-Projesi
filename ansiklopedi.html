@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rüya Ansiklopedisi - Rüya Yorumcum AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+    <div class="navbar-brand"><a href="index.html">Rüya Yorumcum AI</a></div>
+    <div data-netlify-identity-menu></div>
+</header>
+
+    <main>
+        <section class="container encyclopedia-container">
+            <div class="encyclopedia-header">
+                <h1>Rüya Ansiklopedisi</h1>
+                <p>En sık görülen rüyaları ve sembolik anlamlarını kategorilere ayrılmış olarak keşfedin.</p>
+            </div>
+            
+            <div id="kategoriler-alani">
+                </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Rüya Yorumcum AI. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="ruya-ansiklopedisi.js"></script>
+    <script>
+        const kategorilerAlani = document.getElementById('kategoriler-alani');
+        const kategoriler = {};
+
+        // Rüyaları kategorilere göre grupla
+        ruyaAnsiklopedisi.forEach(ruya => {
+            if (!kategoriler[ruya.kategori]) {
+                kategoriler[ruya.kategori] = [];
+            }
+            kategoriler[ruya.kategori].push(ruya);
+        });
+
+        // Her kategori için bir bölüm oluştur
+        for (const kategoriAdi in kategoriler) {
+            const kategoriBolumu = document.createElement('div');
+            kategoriBolumu.classList.add('category-section');
+
+            const kategoriBasligi = document.createElement('h2');
+            kategoriBasligi.classList.add('category-title');
+            kategoriBasligi.textContent = kategoriAdi;
+            kategoriBolumu.appendChild(kategoriBasligi);
+
+            const ruyaGrubu = document.createElement('div');
+            ruyaGrubu.classList.add('dreams-grid');
+
+            kategoriler[kategoriAdi].forEach(ruya => {
+                const ruyaKarti = document.createElement('a');
+                ruyaKarti.href = `ruya-detay.html?ruya=${ruya.slug}`;
+                ruyaKarti.classList.add('dream-card');
+                ruyaKarti.innerHTML = `
+                    <h3>${ruya.baslik}</h3>
+                    <p>${ruya.ozet}</p>
+                `;
+                ruyaGrubu.appendChild(ruyaKarti);
+            });
+            
+            kategoriBolumu.appendChild(ruyaGrubu);
+            kategorilerAlani.appendChild(kategoriBolumu);
+        }
+    </script>
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+</body>
+</html>

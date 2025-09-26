@@ -17,6 +17,7 @@ body {
     padding: 0 50px;
     height: 70px;
     display: flex;
+    justify-content: space-between; /* Önemli: Öğeleri iki uca yaslar */
     align-items: center;
     position: fixed;
     top: 0;
@@ -26,10 +27,23 @@ body {
     border-bottom: 1px solid #3e5670;
 }
 
-.navbar-brand {
+.navbar-brand a {
     font-size: 24px;
     font-weight: bold;
     color: #ffffff;
+    text-decoration: none;
+}
+
+.navbar-links a {
+    color: #bdc3c7; /* Link rengini daha yumuşak yaptık */
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 25px; /* Linkler arasına boşluk */
+    transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+    color: #ffffff; /* Üzerine gelince parlasın */
 }
 
 /* Bölüm Genel Stilleri */
@@ -237,4 +251,183 @@ button:disabled {
     text-align: center;
     padding: 20px 0;
     border-top: 1px solid #3e5670;
+}
+/* Ana Sayfa Yönlendirme Butonu */
+.cta-button {
+    display: inline-block;
+    background-color: #8e44ad;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 30px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #9b59b6;
+    transform: translateY(-2px);
+}
+
+/* Navbar'daki link için stil */
+.navbar-brand a {
+    color: inherit; /* Rengi parent'tan al */
+    text-decoration: none; /* Alt çizgiyi kaldır */
+}
+/* Yorumlama Aracını Ortalamak İçin Ekstra Stil */
+#main-app.container {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+/* --- ANSİKLOPEDİ SAYFASI İÇİN YENİ STİLLER --- */
+
+/* Ansiklopedi sayfasının ana kutusunu biraz daha genişletelim */
+.encyclopedia-container {
+    max-width: 900px;
+    margin-top: 60px; /* Üst boşluk eklendi */
+    margin-bottom: 60px; /* Alt boşluk eklendi */
+}
+
+/* Sayfa başlığı için stil */
+.encyclopedia-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #4a6582;
+}
+
+.encyclopedia-header h1 {
+    margin-bottom: 10px;
+}
+
+.encyclopedia-header p {
+    font-size: 18px;
+    color: #bdc3c7;
+}
+
+/* Kategori Başlıkları */
+.category-title {
+    font-size: 28px;
+    color: #9b59b6; /* Mor tema rengimiz */
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3e5670;
+    text-align: center;
+}
+
+/* Rüya Kartları için Grid Yapısı */
+.dreams-grid {
+    display: grid;
+    /* Ekran genişliğine göre otomatik olarak 2 veya 3 sütunlu yap */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px; /* Kartlar arasındaki boşluk */
+}
+
+/* Tek bir Rüya Kartının Stili */
+.dream-card {
+    background-color: #2c3e50;
+    border-radius: 8px;
+    padding: 25px;
+    text-decoration: none; /* Link alt çizgisini kaldır */
+    color: inherit; /* Yazı rengini parent'tan al */
+    border: 1px solid #3e5670;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dream-card:hover {
+    transform: translateY(-5px); /* Üzerine gelince hafifçe yukarı çıksın */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Gölge efekti */
+}
+
+.dream-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.dream-card p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #bdc3c7;
+    line-height: 1.5;
+}
+/* Yorumlama Sayfası Ekstra İçerik Bölümleri */
+.tool-intro {
+    padding-top: 60px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    text-align: center;
+    background: none;
+    box-shadow: none;
+}
+
+.tool-intro p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #bdc3c7;
+}
+
+.how-it-works {
+    padding-bottom: 60px;
+    padding-top: 0;
+    margin-top: 30px;
+    text-align: center;
+    background: none;
+    box-shadow: none;
+}
+
+.how-it-works h2 {
+    color: #9b59b6;
+    margin-bottom: 15px;
+}
+
+.how-it-works p {
+    font-size: 16px;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #bdc3c7;
+    line-height: 1.7;
+}
+
+/* Ana uygulama kutusunun üst boşluğunu sıfırlayalım */
+#main-app.container {
+    margin-top: 30px; 
+}
+/* --- RÜYA DETAY SAYFASI İÇİN YENİ STİLLER --- */
+
+.dream-detail-container {
+    text-align: left;
+}
+
+.dream-detail-container h1 {
+    font-size: 36px;
+    color: #ffffff;
+    border-bottom: 2px solid #4a6582;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.dream-detail-container .dream-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #bdc3c7;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #9b59b6;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #ffffff;
 }

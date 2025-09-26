@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rüya Detayı - Rüya Yorumcum AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="navbar-brand"><a href="index.html">Rüya Yorumcum AI</a></div>
+        <nav class="navbar-links">
+            <a href="index.html">Ana Sayfa</a>
+            <a href="ansiklopedi.html">Rüya Ansiklopedisi</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container dream-detail-container">
+            <h1 id="ruya-baslik">Yükleniyor...</h1>
+            
+            <div id="ruya-icerik">
+                <p>Lütfen bekleyin, rüya yorumu yükleniyor...</p>
+            </div>
+            
+            <a href="ansiklopedi.html" class="back-link">← Ansiklopediye Geri Dön</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Rüya Yorumcum AI. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="ruya-ansiklopedisi.js"></script>
+    <script>
+        // Bu sayfanın beyni: URL'den rüya bilgisini alıp sayfayı dolduracak.
+        document.addEventListener('DOMContentLoaded', () => {
+            const ruyaBaslikElementi = document.getElementById('ruya-baslik');
+            const ruyaIcerikElementi = document.getElementById('ruya-icerik');
+            
+            // 1. Tarayıcının adres çubuğundaki URL'yi al.
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 2. URL'den "?ruya=..." kısmındaki değeri (slug'ı) çek.
+            const ruyaSlug = urlParams.get('ruya');
+            
+            if (ruyaSlug) {
+                // 3. Veritabanımızda (ruyaAnsiklopedisi) bu slug'a sahip rüyayı bul.
+                const bulunanRuya = ruyaAnsiklopedisi.find(r => r.slug === ruyaSlug);
+                
+                if (bulunanRuya) {
+                    // 4. Eğer rüya bulunduysa, bilgileriyle sayfayı güncelle.
+                    document.title = `${bulunanRuya.baslik} - Rüya Yorumcum AI`;
+                    ruyaBaslikElementi.textContent = bulunanRuya.baslik;
+                    ruyaIcerikElementi.innerHTML = `<p>${bulunanRuya.detay.replace(/\n/g, '</p><p>')}</p>`;
+                } else {
+                    // 5. Eğer bu slug'a sahip bir rüya yoksa, hata mesajı göster.
+                    ruyaBaslikElementi.textContent = 'Rüya Bulunamadı';
+                    ruyaIcerikElementi.innerHTML = '<p>Aradığınız rüya tanımı ansiklopedimizde bulunamadı. Lütfen ansiklopediye geri dönerek başka bir rüya seçin.</p>';
+                }
+            } else {
+                // URL'de ?ruya=... kısmı yoksa hata göster.
+                ruyaBaslikElementi.textContent = 'Geçersiz Adres';
+                ruyaIcerikElementi.innerHTML = '<p>Lütfen görüntülemek için ansiklopediden bir rüya seçin.</p>';
+            }
+        });
+    </script>
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+</body>
+</html>
