@@ -431,3 +431,46 @@ button:disabled {
 .back-link:hover {
     color: #ffffff;
 }
+/* --- Netlify Identity Widget Hizalama ve Stil --- */
+[data-netlify-identity-menu] {
+    display: flex;
+    align-items: center;
+}
+
+.netlify-identity-widget ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px; /* Butonlar arası boşluk */
+    align-items: center;
+}
+
+/* Widget'ın kendi butonlarını bizim temamıza uyduralım */
+.netlify-identity-button, .netlify-identity-button:hover, .netlify-identity-button:focus {
+    background: transparent !important;
+    border: 1px solid #9b59b6 !important;
+    color: #ecf0f1 !important;
+    padding: 8px 15px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    border-radius: 5px !important;
+    transition: background-color 0.3s, color 0.3s !important;
+}
+
+.netlify-identity-button:hover {
+    background-color: #8e44ad !important;
+    color: white !important;
+}
+
+/* Kullanıcı giriş yaptığında görünen "Kullanıcı Adı" ve "Logout" linkleri */
+.netlify-identity-user-details, .netlify-identity-logout {
+    color: #bdc3c7 !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+    transition: color 0.3s !important;
+}
+
+.netlify-identity-user-details:hover, .netlify-identity-logout:hover {
+    color: white !important;
+}
