@@ -2,25 +2,38 @@
 const dreamInput = document.getElementById('dream-input');
 const submitButton = document.getElementById('submit-button');
 const resultArea = document.getElementById('result-area');
+const popularDreamsSection = document.getElementById('popular-dreams-section');
+const popularDreamsList = document.getElementById('popular-dreams-list');
 
-// Butona tıklandığında çalışacak olan fonksiyonu "async" olarak işaretliyoruz.
-// Bu, içinde "await" yani bekleme komutlarını kullanabilmemizi sağlar.
+// Sayfa yüklendiğinde popüler rüyaları listeye ekleyelim.
+document.addEventListener('DOMContentLoaded', () => {
+    // ruyaAnsiklopedisi değişkeni ruya-ansiklopedisi.js dosyasından geliyor.
+    ruyaAnsiklopedisi.forEach(ruya => {
+        const dreamElement = document.createElement('div');
+        dreamElement.classList.add('dream-item');
+        dreamElement.innerHTML = `<h3>${ruya.baslik}</h3><p>${ruya.ozet}</p>`;
+        popularDreamsList.appendChild(dreamElement);
+    });
+});
+
+// Butona tıklandığında çalışacak olan fonksiyon
 submitButton.addEventListener('click', async () => {
     const dreamText = dreamInput.value.trim();
 
     if (dreamText === '') {
-        resultArea.innerText = 'Lütfen yorumlanmasını istediğiniz bir rüya yazın.';
+        resultArea.innerHTML = '<div class="result-header"><span class="result-title">Hata</span></div><div class="result-content">Lütfen yorumlanmasını istediğiniz bir rüya yazın.</div>';
+        resultArea.classList.remove('loading');
         return;
     }
 
-    // Kullanıcıya beklemesini söylüyoruz ve butonu geçici olarak devre dışı bırakıyoruz ki tekrar tekrar basamasın.
-    resultArea.innerText = 'Rüyanız bilge yorumcumuz tarafından analiz ediliyor, lütfen bekleyin...';
+    // --- YENİ ANİMASYONLU YÜKLEME EKRANI ---
     submitButton.disabled = true;
     submitButton.innerText = 'Yorumlanıyor...';
+    popularDreamsSection.classList.add('hidden');
+    resultArea.innerHTML = ''; // Önceki sonuçları temizle
+    resultArea.classList.add('loading'); // Animasyonu başlat
 
     try {
-        // Bizim "güvenli aracımıza" (Netlify Function) bir istek gönderiyoruz.
-        // '/.netlify/functions/yorumla' adresi, projemiz internete yüklendiğinde otomatik olarak çalışacak olan sihirli adrestir.
         const response = await fetch('/.netlify/functions/yorumla', {
             method: 'POST',
             headers: {
@@ -29,23 +42,31 @@ submitButton.addEventListener('click', async () => {
             body: JSON.stringify({ dream: dreamText }),
         });
 
-        // Eğer aracıdan gelen cevap başarılı değilse, bir hata mesajı göster.
         if (!response.ok) {
             throw new Error('Sunucudan geçerli bir cevap alınamadı.');
         }
 
-        // Gelen cevabı JSON formatından normal metne çeviriyoruz.
         const data = await response.json();
         
-        // Sonucu, yani rüya yorumunu ekrana yazdırıyoruz.
-        resultArea.innerText = data.interpretation;
+        // --- YENİ PROFESYONEL SONUÇ SUNUMU ---
+        resultArea.classList.remove('loading'); // Animasyonu durdur
+        resultArea.innerHTML = `
+            <div class="result-header">
+                <span class="result-title">İşte Rüyanızın Anlamı:</span>
+            </div>
+            <div class="result-content">
+                ${data.interpretation}
+            </div>
+        `;
+        
+        popularDreamsSection.classList.remove('hidden');
 
     } catch (error) {
-        // Herhangi bir aşamada hata olursa kullanıcıya bunu bildiriyoruz.
         console.error('Hata:', error);
-        resultArea.innerText = 'Bir sorun oluştu. Lütfen daha sonra tekrar deneyin.';
+        resultArea.classList.remove('loading'); // Hata durumunda da animasyonu durdur
+        resultArea.innerHTML = '<div class="result-header"><span class="result-title">Hata</span></div><div class="result-content">Bir sorun oluştu. Lütfen daha sonra tekrar deneyin.</div>';
     } finally {
-        // İşlem başarılı da olsa, hata da olsa, butonu tekrar aktif hale getiriyoruz.
+        // İşlem bitince butonu tekrar aktif hale getiriyoruz.
         submitButton.disabled = false;
         submitButton.innerText = 'Yorumla';
     }
